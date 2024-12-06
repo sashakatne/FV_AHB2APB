@@ -1,7 +1,7 @@
 
 # Select AEP as the VC Formal App mode
 set_fml_appmode AEP
-set design APB_FSM_Controller
+set design APB_Controller
 
 set_fml_var fml_aep_unique_name true
 read_file -top $design -format sverilog -sva \
