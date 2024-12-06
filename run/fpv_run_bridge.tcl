@@ -3,7 +3,7 @@ set_fml_appmode FPV
 set design Bridge_Top
 
 set_fml_var fml_aep_unique_name true
-read_file -top $design -format sverilog -sva -aep all -vcs {-f ../RTL/filelist +define+INLINE_SVA ../sva/bridge_top_sva.sv}
+read_file -top $design -format sverilog -sva -aep all -vcs {-f ../RTL/filelist +define+INLINE_SVA ../RTL/bridge_top_sva.sv}
 #read_waiver_file -elfiles aep.el
 
 # Creating clock and reset signals
