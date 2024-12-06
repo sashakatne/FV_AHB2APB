@@ -1,4 +1,4 @@
-module APB_FSM_Controller_sva(input wire Hclk,
+module APB_Controller_sva(input wire Hclk,
                               input wire Hresetn,
                               input wire valid,
                               input wire Hwrite,
