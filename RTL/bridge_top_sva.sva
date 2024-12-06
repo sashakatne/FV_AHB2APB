@@ -21,6 +21,30 @@ let addr2 = Haddr>=32'h8800_0000 && Haddr<32'h8C00_0000;
 
 let possible_Pselx = ((Pselx == 0) || (Pselx == 1) || (Pselx == 2) || (Pselx == 4)); 
 
+// No HREADY in reset state
+assume property (!(!Hresetn && Hreadyin));
+
+// Fix HTRANS to be 2'b10 or 2'b11
+assume property((Htrans == 2'b10) || (Htrans == 2'b11));
+
+// Valid HWDATA in data cycle of HWRITE
+assume property (@(posedge Hclk) disable iff(!Hresetn) (Hwrite |=> !$isunknown(Hwdata)));
+
+// HADDR should be in the range of peripherals address
+assume property (@(posedge Hclk) disable iff(!Hresetn) (Haddr>=32'h8000_0000 && Haddr<32'h8C00_0000));
+
+// when HWRITE is high HREADYIN should be high in that cycle and in following cycle 
+assume property (@(posedge Hclk) disable iff(!Hresetn) (Hwrite |-> Hreadyin[*2]));
+
+// HREADYIN is high for 2 consecutive cycles later HREADYIN shouldn't be high until there are 2 times HREADYOUT
+assume property (@(posedge Hclk) disable iff(!Hresetn) (Hreadyin ##1 Hreadyin |=> (!Hreadyin throughout Hreadyout[->2])));
+
+// For Read transaction HREADYIN shouldn't be high sencond until HREADYOUT of 1st read is high (added for Hreadyout_penable_read)
+assume property (@(posedge Hclk) disable iff(!Hresetn) (Hreadyin && !Hwrite |=> (!Hreadyin until Hreadyout)));  
+
+
+
+
     // Assertions, assumptions and cover properties go here
 sequence write; 
         Pwrite &&  possible_Pselx  && !Penable ##1 Pwrite && possible_Pselx && Penable;
