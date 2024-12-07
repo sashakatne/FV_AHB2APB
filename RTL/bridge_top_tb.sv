@@ -63,15 +63,19 @@ module Bridge_Top_tb;
     // Apply reset
     apply_reset();
 
+    #10;
     // Test Case 1: Single Write Transaction
     test_single_write();
 
+    #10;
     // Test Case 2: Single Read Transaction
     test_single_read();
 
+    #10;
     // Test Case 3: Burst Write Transaction
     test_burst_write();
 
+    #10;
     // Test Case 4: Burst Read Transaction
     test_burst_read();
 
