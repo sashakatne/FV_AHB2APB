@@ -8,7 +8,7 @@
 //
 // By-Prajwal Kumar Sahu
 
-module APB_Controller( Hclk,Hresetn,valid,Haddr1,Haddr2,Hwdata1,Hwdata2,Prdata,Hwrite,Haddr,Hwdata,Hwritereg,tempselx, 
+module APB_FSM_Controller( Hclk,Hresetn,valid,Haddr1,Haddr2,Hwdata1,Hwdata2,Prdata,Hwrite,Haddr,Hwdata,Hwritereg,tempselx, 
 			   Pwrite,Penable,Pselx,Paddr,Pwdata,Hreadyout);
 
 input Hclk,Hresetn,valid,Hwrite,Hwritereg;
