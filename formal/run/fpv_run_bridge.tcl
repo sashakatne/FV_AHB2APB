@@ -1,8 +1,9 @@
 
 set_fml_appmode FPV
-set design AHB_slave_interface
+set design Bridge_Top
 
-read_file -top $design -format sverilog -sva  -vcs {-f ../RTL/filelist}
+
+read_file -top $design -format sverilog -sva -vcs {-f ../RTL/filelist}
 
 create_clock Hclk -period 100 
 create_reset Hresetn -sense low

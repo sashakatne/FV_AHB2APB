@@ -30,11 +30,15 @@ parameter ST_RENABLE=3'b101;
 parameter ST_WENABLE=3'b110;
 parameter ST_WENABLEP=3'b111;
 
-    // Assertions, assumptions and cover properties go here
+    
+
+
+
+//1: This ensures the property is always triggered (unconditional check)
 
 // Property to verify that PRESENT_STATE becomes NEXT_STATE one cycle later
 property p_state_transition;
-    @(posedge Hclk) disable iff (!Hresetn) 1 |-> ##2 PRESENT_STATE == $past(NEXT_STATE);
+    @(posedge Hclk) disable iff (!Hresetn) 1 |-> ##2 PRESENT_STATE == $past(NEXT_STATE);   
 endproperty
 assert_state_transition: assert property (p_state_transition);
 
@@ -56,7 +60,7 @@ property p_IDLE_to_IDLE;
     @(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_IDLE && !valid |-> NEXT_STATE == ST_IDLE;
 endproperty
 assert_IDLE_to_IDL: assert property (p_IDLE_to_IDLE);
-///////////////////////////
+
 
 // Transition from ST_WWAIT
 property p_WWAIT_to_WRITE;
@@ -68,14 +72,14 @@ property p_WWAIT_to_WRITEP;
     @(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WWAIT && valid |-> NEXT_STATE == ST_WRITEP;
 endproperty
 assert_WWAIT_to_WRITEP: assert property (p_WWAIT_to_WRITEP);
-///////////////////////////
+
 
 // Transition from ST_READ
 property p_READ_to_RENABLE;
     @(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_READ |-> NEXT_STATE == ST_RENABLE;
 endproperty
 assert_READ_to_RENABLE: assert property (p_READ_to_RENABLE);
-///////////////////////////
+
 
 // Transition from ST_WRITE
 property p_WRITE_to_WENABLE;
@@ -87,14 +91,14 @@ property p_WRITE_to_WENABLEP;
     @(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WRITE && valid |-> NEXT_STATE == ST_WENABLEP;
 endproperty
 assert_WRITE_to_WENABLEP: assert property (p_WRITE_to_WENABLEP);
-///////////////////////////
+
 
 // Transition from ST_WRITEP
 property p_WRITEP_to_WENABLEP;
     @(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WRITEP |-> NEXT_STATE == ST_WENABLEP;
 endproperty
 assert_WRITEP_to_WENABLEP: assert property (p_WRITEP_to_WENABLEP);
-///////////////////////////
+
 
 // Transitions from ST_RENABLE
 property p_RENABLE_to_IDLE;
@@ -111,7 +115,7 @@ property p_RENABLE_to_READ;
     @(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_RENABLE && valid && !Hwrite |-> NEXT_STATE == ST_READ;
 endproperty
 assert_RENABLE_to_READ: assert property (p_RENABLE_to_READ);
-///////////////////////////
+
 
 // Transitions from ST_WENABLE
 property p_WENABLE_to_IDLE;
@@ -128,7 +132,7 @@ property p_WENABLE_to_READ;
     @(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WENABLE && valid && !Hwrite |-> NEXT_STATE == ST_READ;
 endproperty
 assert_WENABLE_to_READ: assert property (p_WENABLE_to_READ);
-///////////////////////////
+
 
 // Transitions from ST_WENABLEP
 property p_WENABLEP_to_WRITE;

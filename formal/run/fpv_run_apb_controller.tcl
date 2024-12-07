@@ -1,11 +1,9 @@
 
 # Select AEP as the VC Formal App mode
-set_fml_appmode FXP
+set_fml_appmode FPV
 set design APB_Controller
 
-set_fml_var fml_aep_unique_name true
-read_file -top $design -format sverilog -sva \
--aep all -vcs {../RTL/APB_Controller.v +define+INLINE_SVA}
+read_file -top $design -format sverilog -sva  -vcs {-f ../RTL/filelist}
 #read_waiver_file -elfiles aep.el
 
 # Creating clock and reset signals

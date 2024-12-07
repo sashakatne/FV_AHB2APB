@@ -1,0 +1,1 @@
+bind AHB_slave_interface AHB_slave_interface_sva chk_ahb_slave_interface (.Hclk(Hclk), .Hresetn(Hresetn), .Hwrite(Hwrite), .Hreadyin(Hreadyin), .Htrans(Htrans), .Haddr(Haddr), .Hwdata(Hwdata), .Prdata(Prdata), .valid(valid), .Haddr1(Haddr1), .Haddr2(Haddr2), .Hwdata1(Hwdata1), .Hwdata2(Hwdata2), .Hrdata(Hrdata), .Hwritereg(Hwritereg), .tempselx(tempselx), .Hresp(Hresp));

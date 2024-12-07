@@ -2,8 +2,8 @@
 ../RTL/AHB_Slave_Interface.sv
 ../RTL/bridge_top.sv
 ../RTL/bridge_top_sva.sva
-../RTL/APB_Controller_sva.sva
-../RTL/AHB_Slave_Interface_sva.sva
 ../RTL/bind_bridge_top_sva.sva
-../RTL/bind_APB_Controller_sva.sva
+../RTL/AHB_Slave_Interface_sva.sva
 ../RTL/bind_AHB_Slave_Interface_sva.sva
+../RTL/APB_Controller_sva.sva
+../RTL/bind_APB_Controller_sva.sva

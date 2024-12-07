@@ -3,9 +3,10 @@
 set_fml_appmode AEP
 set design APB_Controller
 
-set_fml_var fml_aep_unique_name true
-read_file -top $design -format sverilog -sva \
--aep all -vcs {../RTL/APB_Controller.v +define+INLINE_SVA}
+set_app_var fml_enable_fsm_report_complexity true
+set_app_var fml_trace_auto_fsm_state_extraction true
+
+read_file -top $design -format sverilog -aep all+fsm_deadlock -vcs {../RTL/APB_Controller.sv}
 #read_waiver_file -elfiles aep.el
 
 # Creating clock and reset signals
@@ -15,3 +16,5 @@ create_reset Hresetn -sense low
 # Runing a reset simulation
 sim_run -stable 
 sim_save_reset
+
+aep_generate -type fsm_fairness

@@ -1,0 +1,1 @@
+bind APB_Controller APB_Controller_sva APB_Controller_chk(.*);

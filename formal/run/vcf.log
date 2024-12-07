@@ -1,0 +1,65 @@
+
+                                   VC Static 
+
+              Version V-2023.12-SP2-3 for linux64 - Oct 12, 2024 
+
+                    Copyright (c) 2010 - 2024 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+restore_session -level default
+
+MasterSourceFile fxp_run_bridge.tcl
+set_fml_appmode FXP
+set design Bridge_Top
+read_file -top $design -format sverilog -sva -vcs {-f ../RTL/filelist}
+Warning-[DPIPL] Duplicate port in port list
+../RTL/bridge_top.sv, 12
+  Duplicate port 'Hreadyout' in port list, this has been previously declared 
+  at line 12
+
+Info: Invoking New SVA Compiler Instrument...
+Info: SVAC-NC Start
+Info: SVAC-NC Finished
+Info: Invoking Simon...
+Info: Simon VCS Start
+=======================================================
+VCS CPU Time(s)     :0.43
+SIMON CPU Time(s)   :0.21
+SIMON Total Time(s) :0.16
+Peak Memory(MB)     :413
+=======================================================
+Info: Simon VCS Finished
+Info: Simon call complete 
+Info: Exiting after Simon Analysis 
+Verdi KDB elaboration done and the database successfully generated: 0 error(s), 0 warning(s)
+[Info] DB_COPT045: Vcs analyzer task has finished.
+[Info] PROP_I_COLLECT: Collecting Source Properties from the view:Bridge_Top.
+# Gate Counts 
+Number of Flat Instances = 1042
+Number of Operator = 1042
+Number of Libcells = 0
+Number of Black-Box Instances = 0
+Number of FlipFlop BitWise = 202
+Number of Latch Bitwise = 68
+Number of Nand BitWise = 0
+Number of Comb logic = 287
+
+create_clock Hclk -period 100 
+create_reset Hresetn -sense low
+sim_run -stable 
+[Info] SIM_I_CREATE: Create Simulation Model.
+sim_save_reset
+
+action aaVerdiRestoreClipboard -trigger
