@@ -10,7 +10,7 @@ This repository contains all the materials related to the formal verification of
 - `run/`: Scripts and configurations used for running verification tests (Note: content may be ignored in Git tracking for privacy or size considerations).
 
 ## Getting Started
-Explore the `RTL/` and `sva/` directories to examine the design and verification elements directly.
+Explore the `RTL/` directories to examine the design and verification elements directly.
 
 ## Contribution Guidelines
 Contributions to enhance the verification process or improve the design are welcome. Please fork the repository and submit pull requests with your proposed changes. For major changes, kindly open an issue first to discuss what you would like to change.
