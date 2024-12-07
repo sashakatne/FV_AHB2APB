@@ -7,7 +7,6 @@ set_app_var fml_enable_fsm_report_complexity true
 set_app_var fml_trace_auto_fsm_state_extraction true
 
 read_file -top $design -format sverilog -aep all+fsm_deadlock -vcs {../RTL/APB_Controller.sv}
-#read_waiver_file -elfiles aep.el
 
 # Creating clock and reset signals
 create_clock Hclk -period 100 

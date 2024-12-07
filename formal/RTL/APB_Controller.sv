@@ -1,13 +1,3 @@
-
-// AHB to APG Bridge | Maven Silicon
-//
-//
-//
-// APB FSM Controller
-// Date:08-06-2022
-//
-// By-Prajwal Kumar Sahu
-
 module APB_Controller( Hclk,Hresetn,valid,Haddr1,Haddr2,Hwdata1,Hwdata2,Prdata,Hwrite,Haddr,Hwdata,Hwritereg,tempselx, 
 			   Pwrite,Penable,Pselx,Paddr,Pwdata,Hreadyout);
 
@@ -99,14 +89,22 @@ always @(PRESENT_STATE,valid,Hwrite,Hwritereg)
 		      NEXT_STATE=ST_READ;
 		   end
 
-	ST_WENABLEP:begin
-		      if (~valid && Hwritereg)
-		       NEXT_STATE=ST_WRITE;
-		      else if (valid && Hwritereg)
-		       NEXT_STATE=ST_WRITEP;
-		      else
-		       NEXT_STATE=ST_READ;
-		    end
+    ST_WENABLEP:begin
+      `ifdef BUG_INJECTION
+      // Introduce a bug that causes a deadlock by staying in ST_WENABLEP
+      if (valid && ~Hwritereg)
+        NEXT_STATE=ST_WENABLEP;
+      else
+        NEXT_STATE=ST_WENABLEP;
+      `else
+      if (~valid && Hwritereg)
+        NEXT_STATE=ST_WRITE;
+      else if (valid && Hwritereg)
+        NEXT_STATE=ST_WRITEP;
+      else
+        NEXT_STATE=ST_READ;
+      `endif
+    end
 
 	default: begin
 		   NEXT_STATE=ST_IDLE;

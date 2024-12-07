@@ -4,7 +4,6 @@ set_fml_appmode FPV
 set design AHB_slave_interface
 
 read_file -top $design -format sverilog -sva  -vcs {-f ../RTL/filelist}
-#read_waiver_file -elfiles aep.el
 
 # Creating clock and reset signals
 create_clock Hclk -period 100 

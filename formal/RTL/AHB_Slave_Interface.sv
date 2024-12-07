@@ -1,15 +1,3 @@
-   
-// AHB to APG Bridge | Maven Silicon
-//
-//
-//
-// AHB Slave Interface
-// Date:04-06-2022
-//
-//
-// Modifications: The Combinational part sensitivity list did not inclued Hresetn and hence they gave x output on reset
-
-
 module AHB_slave_interface(Hclk,Hresetn,Hwrite,Hreadyin,Htrans,Haddr,Hwdata,
 			   Prdata,valid,Haddr1,Haddr2,Hwdata1,Hwdata2,Hrdata,Hwritereg,tempselx,Hresp);
 input Hclk,Hresetn;
@@ -73,9 +61,13 @@ output  [1:0] Hresp;
 	always @(Hreadyin,Haddr,Htrans,Hresetn)
 		begin
 			valid=0;
+`ifdef BUG_INJECTION
+			// Introduce a bug by altering the address range
+			if (Hresetn && Hreadyin && (Haddr>=32'h7000_0000 && Haddr<32'h7C00_0000) && (Htrans==2'b10 || Htrans==2'b11) )
+`else
 			if (Hresetn && Hreadyin && (Haddr>=32'h8000_0000 && Haddr<32'h8C00_0000) && (Htrans==2'b10 || Htrans==2'b11) )
+`endif
 				valid=1;
-
 		end
 		
 /// Implementing Tempselx Logic

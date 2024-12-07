@@ -18,31 +18,45 @@ module AHB_slave_interface_sva(input wire Hclk,
 
    
 // Assert valid signal generation logic
-assert property (@(posedge Hclk)
-    (Hresetn && Hreadyin && (Haddr >= 32'h8000_0000 && Haddr < 32'h8C00_0000) && (Htrans == 2'b10 || Htrans == 2'b11))|-> (valid == 1'b1));
+property valid_signal_generation;
+    @(posedge Hclk)
+    (Hresetn && Hreadyin && (Haddr >= 32'h8000_0000 && Haddr < 32'h8C00_0000) && (Htrans == 2'b10 || Htrans == 2'b11)) |-> (valid == 1'b1);
+endproperty
+assert property (valid_signal_generation);
 
 // Assert that valid should not be high when conditions are not met
-assert property (@(posedge Hclk)
-    (!(Hresetn && Hreadyin && (Haddr >= 32'h8000_0000 && Haddr < 32'h8C00_0000) && (Htrans == 2'b10 || Htrans == 2'b11)))|-> (valid == 1'b0));
+property valid_signal_not_high;
+    @(posedge Hclk)
+    (!(Hresetn && Hreadyin && (Haddr >= 32'h8000_0000 && Haddr < 32'h8C00_0000) && (Htrans == 2'b10 || Htrans == 2'b11))) |-> (valid == 1'b0);
+endproperty
+assert property (valid_signal_not_high);
 
 
 // Assert tempselx logic for different ranges of Haddr
-assert property (@(posedge Hclk)
-    (Hresetn && (Haddr >= 32'h8000_0000 && Haddr < 32'h8400_0000)) |-> (tempselx == 3'b001));
+property tempselx_range_1;
+    @(posedge Hclk)
+    (Hresetn && (Haddr >= 32'h8000_0000 && Haddr < 32'h8400_0000)) |-> (tempselx == 3'b001);
+endproperty
+assert property (tempselx_range_1);
 
-assert property (@(posedge Hclk)
-    (Hresetn && (Haddr >= 32'h8400_0000 && Haddr < 32'h8800_0000)) |-> (tempselx == 3'b010));
+property tempselx_range_2;
+    @(posedge Hclk)
+    (Hresetn && (Haddr >= 32'h8400_0000 && Haddr < 32'h8800_0000)) |-> (tempselx == 3'b010);
+endproperty
+assert property (tempselx_range_2);
 
-assert property (@(posedge Hclk)
-    (Hresetn && (Haddr >= 32'h8800_0000 && Haddr < 32'h8C00_0000)) |-> (tempselx == 3'b100));
-
+property tempselx_range_3;
+    @(posedge Hclk)
+    (Hresetn && (Haddr >= 32'h8800_0000 && Haddr < 32'h8C00_0000)) |-> (tempselx == 3'b100);
+endproperty
+assert property (tempselx_range_3);
 
 
 // Assert tempselx should be 000 for invalid ranges of Haddr
-assert property (@(posedge Hclk)
-    (Hresetn && !(Haddr >= 32'h8000_0000 && Haddr < 32'h8C00_0000)) |-> (tempselx == 3'b000));
-
+property tempselx_invalid_range;
+    @(posedge Hclk)
+    (Hresetn && !(Haddr >= 32'h8000_0000 && Haddr < 32'h8C00_0000)) |-> (tempselx == 3'b000);
+endproperty
+assert property (tempselx_invalid_range);
 
 endmodule
-
-
